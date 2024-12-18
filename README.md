@@ -1,6 +1,7 @@
 # Plagiarism Detector using ML and NLP 
 
 A machine learning-based plagiarism detection system built using Natural Language Processing (NLP) techniques to ensure the integrity of academic work. This tool helps detect similarities between texts and promotes academic honesty by identifying potential plagiarism.
+
 This project is ideal for anyone interested in AI and ML and is looking to gain experience practically. This is also for ideal for anyone trying to figure out if AI or ML is something the want to pursue.
 A lot of time and effort was taking into this, that being said, it is not perfect and may contain some errors.
 
