@@ -22,7 +22,7 @@ A lot of time and effort was taking into this, that being said, it is not perfec
 This project was inspired by the [Plagiarism Detector using Machine Learning](https://github.com/611noorsaeed/Plagiarism-detector-using-machine-learning) repository. I utilized their dataset, making slight modifications to better suit my implementation. I highly appreciate the work done by the original author, and this project builds on their efforts to improve plagiarism detection.
 
 ## Dataset:
-The dataset used in this project is based on the one from the above-mentioned repository. I modified the dataset slightly by cleaning it and ensuring that it fits the requirements for the machine learning model in this plagiarism detector system. The dataset was preprocessed with techniques like lemmatization and POS tagging to improve the accuracy of text comparisons.
+The dataset used in this project is based on the one from the above-mentioned repository. I modified the dataset slightly by adding more examples to make the dataset bigger. Feel free to use any dataset of your choice.
 
 ## Preprocessing:
 The dataset underwent a series of preprocessing steps to prepare it for the plagiarism detection model:
