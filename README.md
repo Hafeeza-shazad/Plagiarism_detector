@@ -9,7 +9,6 @@ A lot of time and effort was taking into this, that being said, it is not perfec
 - **Real-time Feedback**: Provides feedback on content originality as soon as it's submitted.
 - **Preprocessing**: Removes stopwords, punctuation, and converts text to lowercase before processing for accuracy.
 - **Lemmatization and POS Tagging**: Uses lemmatization to reduce words to their base forms and POS (Part of Speech) tagging to identify word types, ensuring the analysis is more accurate.
-- **Training and Testing Data**: 80% of the dataset is used for training the model, and 20% is reserved for testing the accuracy of the system.
 - **User-friendly Interface**: The Flask application makes it easy to interact with the system. The interface is simple, intuitive, and easy to navigate, designed with user experience in mind.
 - **Memes and Educational Content**: The system incorporates memes and relatable content that aim to educate users about plagiarism and promote academic integrity in a lighthearted, engaging way.
 - **Login Functionality**: Allows users to securely log in to the system and access their profiles.
@@ -29,19 +28,22 @@ The dataset underwent a series of preprocessing steps to prepare it for the plag
 - **Lowercasing**: All text was converted to lowercase to ensure uniformity and reduce false positives.
 - **Stopword Removal**: Commonly used words (stopwords) like "the", "and", "is", etc., were removed using the NLTK library. This helps focus on the content-specific words.
 - **Punctuation Removal**: All punctuation marks were stripped from the text to avoid unnecessary distractions for the algorithm.
+- **Removing common words**: I removed specific common words from the text, such as name.
 - **Lemmatization**: Words were reduced to their base or dictionary form using NLTK's lemmatizer. This ensures that variations of words are treated as the same word (e.g., "running" becomes "run").
 - **POS Tagging**: Part of Speech tagging was used to identify the word types (nouns, verbs, adjectives, etc.) to ensure the system better understands the structure of the text.
 - **TF-IDF Vectorization**: The processed texts were converted into numerical vectors using Term Frequency-Inverse Document Frequency (TF-IDF) to capture important word features.
 
 ## Training and testing the ML 
-I used svm and 80% of the preprossed and vectorized data was to train the model and 20% to test it. 
+I used svm and 80% of the preprossed and vectorized data was to train the model and 20% used to test theaccuracy of the system. 
 
 
 ## Flask Application 
 I used Flask and used it to connect my trained model and database to my user interface. This application will allow ; 
 - Users to submit text for plagiarism, If plagiarism is detected then the specific text will be highlighted.
 - Users to access previous submissions and Plagiaraism results.
-- Admins to manage the users.
+- Admins to manage the users ie delete or update user roles.
+
+The Flask application provides customized interfaces for different user roles (Student and Instructor, Admin). Each role has access to specific functionalities and views, ensuring that users have a streamlined and tailored experience based on their needs and responsibilities
 
 ## Database
 I used Mysql Workbench.
