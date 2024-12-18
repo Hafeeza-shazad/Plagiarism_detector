@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Bootstrap CSS Link-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body{
+            background-color: #EDF3FB;
+            font-family:  sans-serif;
+        }
+        /* Navbar styling */
+        .navbar {
+            background-color: #5AA8D6;  /* brand navbar bg color */
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;  /* White Navbar links */
+        }
+        /* Styling for Login and Logout buttons */
+        .nav-item .btn {
+            background-color: white;
+            color: #5AA8D6;
+            border: 2px solid white;
+            border-radius: 0; 
+            padding: 5px 15px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+           .container {  
+            text-align: center; 
+            align-items: center;
+        }
+        .banner img {
+            width: 100%; 
+            max-height: 400px; 
+            object-fit: cover; 
+        }
+      
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/dashboard">Studify</a> <!--Link for dashboard-->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if 'user_email' in session %}  <!--Links for when the user is logged in-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                        {% if session['role'] == 'Admin' %}  <!-- Admin Dashboard available if user is Admin-->
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin">Admin Dashboard</a>  
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/index">Plagiarism Detector</a>  
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center" href="/profile">
+                                <img src="/static/images/user_profile.jpeg" alt="user_profile" class="rounded-circle" style="width: 35px; height: 35px; margin-right: 8px;">
+                                
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <!-- confirmation for logout -->
+                            <a class="btn" href="#" onclick="confirmLogout()">Logout</a>
+                        </li>
+                    {% else %} <!--Link for when the user is NOT logged in-->
+                        <li class="nav-item">
+                            <a class="btn" href="/login">Login</a>  
+                        </li>
+                        
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+   
+        
+<!-- Image Banner -->
+<div class="container-fluid p-0">
+    <div class="banner">
+        <img src="static/images/STUDIFy.png" class="img-fluid" alt="Banner Image" >
+      </div>
+  </div>
+        
+       <div class="container">
+        {% if 'user_email' in session %} <!--Message displayed when user is logged in-->
+        
+        <br>
+        <h4>Welcome, {{ session['user_email'] }}</h4>
+        {% else %}  <!--Message displayed when user is NOT logged in-->
+        <br><br>
+        <p><big>Log in to access the Plagiarism detector</big></p>
+        {% endif %}
+       </div>
+   
+
+    
+
+    <script>
+        // Function for cofirming logout
+        function confirmLogout() {
+            var result = confirm("Are you sure you want to log out?");
+            if (result) {
+                window.location.href = "/logout";  // Link for logout route
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

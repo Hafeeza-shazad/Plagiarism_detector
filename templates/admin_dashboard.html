@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Manage Users</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <style>
+       body{
+            background-color: #EDF3FB;
+            font-family:  sans-serif;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background-color: #5AA8D6;  /* Same color as the dashboard */
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;  /* White text in the navbar */
+        }
+        .nav-link:hover {
+            color: #f8f9fa !important;  /* Light gray on hover */
+        }
+
+        /* Table styling */
+        table {
+            border-collapse: collapse;
+            width: 100%;  /* Full width */
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3A4163;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        button, select {
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 5px 0;
+            font-weight: bold;
+            border: 2px solid #5AA8D6;
+            color: #5AA8D6;
+            background-color: white;
+        }
+
+        button:hover, select:hover {
+            background-color: #5AA8D6;
+            color: white;
+        }
+
+        /* Update and delete buttons styling */
+        .btn-update, .btn-delete {
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-update {
+            background-color: #5AA8D6;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-delete {
+            background-color: #FF6347;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Center the page heading */
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #3A4163;
+        }
+        .nav-item .btn {
+            background-color: white;
+            color: #5AA8D6;
+            border: 2px solid white;
+            border-radius: 0; /* Make the buttons square */
+            padding: 5px 15px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/dashboard">Studify</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Admin Dashboard</a>  
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index">Plagiarism Detector</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="/profile">
+                            <img src="/static/images/user_profile.jpeg" alt="user_profile" class="rounded-circle" style="width: 35px; height: 35px; margin-right: 8px;">
+                            
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Added confirmation for logout -->
+                        <a class="btn" href="#" onclick="confirmLogout()">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Heading -->
+    <h1>Admin Dashboard - Manage Users</h1>
+
+    <!-- Users Table -->
+    <div class="container">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        <form action="{{ url_for('update_user', email=user.email) }}" method="POST" style="display:inline;">
+                            <label for="role">Update Role:</label>
+                            <select name="role">
+                                <option value="Student" {% if user.role == 'Student' %}selected{% endif %}>Student</option>
+                                <option value="Instructor" {% if user.role == 'Instructor' %}selected{% endif %}>Instructor</option>
+                                <option value="Admin" {% if user.role == 'Admin' %}selected{% endif %}>Admin</option>
+                            </select>
+
+                            <button type="submit" class="btn-update">Update</button>
+                        </form>
+
+                        <form action="{{ url_for('delete_user', email=user.email) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn-delete" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- JavaScript for logout confirmation -->
+    <script>
+        function confirmLogout() {
+            var result = confirm("Are you sure you want to log out?");
+            if (result) {
+                window.location.href = "/logout";  // Redirect to the logout route if confirmed
+            }
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

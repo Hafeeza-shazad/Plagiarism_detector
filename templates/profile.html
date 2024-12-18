@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body{
+            background-color: #EDF3FB;
+            font-family:  sans-serif;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background-color: #5AA8D6;  /* Same color as the dashboard */
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;  /* White text in the navbar */
+        }
+        .nav-link:hover {
+            color: #f8f9fa !important;  /* Light gray on hover */
+        }
+
+        /* Table styling */
+        table {
+            border-collapse: collapse;
+            width: 100%;  /* Full width */
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3A4163;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        button, select {
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 5px 0;
+            font-weight: bold;
+            border: 2px solid #5AA8D6;
+            color: #5AA8D6;
+            background-color: white;
+        }
+
+        button:hover, select:hover {
+            background-color: #5AA8D6;
+            color: white;
+        }
+
+        /* Center the page heading */
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #3A4163;
+        }
+        h3{
+            color: #5AA8D6; 
+        }
+        .nav-item .btn {
+            background-color: white;
+            color: #5AA8D6;
+            border: 2px solid white;
+            border-radius: 0; /* Make the buttons square */
+            padding: 5px 15px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/dashboard">Studify</a> <!--Link for dashboard-->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                        {% if session['role'] == 'Admin' %}  <!-- Admin Dashboard available if user is Admin-->
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin">Admin Dashboard</a>  
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/index">Plagiarism Detector</a>  
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center" href="/profile">
+                                <img src="/static/images/user_profile.jpeg" alt="user_profile" class="rounded-circle" style="width: 35px; height: 35px; margin-right: 8px;">
+                                
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- confirmation for logout -->
+                            <a class="btn" href="#" onclick="confirmLogout()">Logout</a>
+                        </li>
+                   
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br><br><br>
+
+    <div class="container">
+        <div class="row align-items-center mb-4">
+            <!-- Profile Image -->
+            <div class="col-md-4 text-center">
+                <img src="/static/images/user_profile.jpeg" alt="user_profile" class="rounded-circle img-fluid shadow" style="width: 200px; height: 200px;">
+            </div>
+            <!-- User Information -->
+            <div class="col-md-8">
+                <h3>E-mail Account: {{ user.email }}</h3>
+                <h3>Number of submissions: {{ submissions|length }}</h3>
+            
+            </div>
+        </div>
+    <br><br><br>
+    <div class="past_submission">
+    
+        
+
+        <h2>Your Past Submissions</h2>
+        {% if submissions %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Submission Date</th>
+                    <th>Plagiarism Result</th>
+                    <th>Submission Text (Preview)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in submissions %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ submission.submission_date }}</td>
+                    <td>{{ submission.plagiarism_result or "Not Available" }}</td>
+                    <td>{{ submission.submission_text[:50] }}...</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>You have no submissions yet.</p>
+        {% endif %}
+    </div>
+    <script>
+        // Function for cofirming logout
+        function confirmLogout() {
+            var result = confirm("Are you sure you want to log out?");
+            if (result) {
+                window.location.href = "/logout";  // Link for logout route
+            }
+        }
+    </script>
+</body>
+</html>
